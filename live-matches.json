@@ -1,4 +1,37 @@
 {
-  "matches": [],
-  "last_updated": "2023-01-01T00:00:00Z"
+  "metadata": {
+    "source": "https://www.oddsportal.com/virtual-soccer/results/",
+    "schema_version": "1.2",
+    "generated_by": "footstats-scraper v1.0",
+    "timestamp": "2024-06-19T14:30:00-03:00",
+    "timezone": "America/Sao_Paulo"
+  },
+  "status": {
+    "success": true,
+    "duration_ms": 1240,
+    "matches_processed": 42,
+    "error_count": 0
+  },
+  "validation": {
+    "checksum": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "schema": "https://json-schema.org/draft/2020-12/schema"
+  },
+  "matches": [
+    {
+      "id": "c7d659a2feaa",
+      "league": "Virtual Premier",
+      "home_team": "Virtual Arsenal",
+      "away_team": "Virtual Chelsea",
+      "home_goals": 2,
+      "away_goals": 1,
+      "minute": 90,
+      "status": "Finalizado",
+      "timestamp": "2024-06-19T14:25:00-03:00",
+      "odds": {
+        "home": 1.85,
+        "draw": 3.40,
+        "away": 4.20
+      }
+    }
+  ]
 }
