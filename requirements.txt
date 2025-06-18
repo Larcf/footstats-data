@@ -1,4 +1,39 @@
-# Dependências para web scraping
-requests==2.31.0          # Requisições HTTP
-beautifulsoup4==4.12.2    # Parsing de HTML
-cloudscraper==1.2.71      # Bypass no Cloudflare
+# === CORE ===
+# HTTP e Scraping
+requests==2.31.0
+beautifulsoup4==4.12.2
+cloudscraper==1.2.71
+
+# === RESILIÊNCIA ===
+tenacity==8.2.3  # Retry automático
+
+# === DADOS ===
+pandas==2.0.3
+python-dateutil==2.9.0.post0
+pytz==2024.1
+
+# === VALIDAÇÃO ===
+pydantic==2.7.1
+
+# === SEGURANÇA ===
+cryptography==42.0.5
+
+# === LOGGING ===
+structlog==24.1.0
+
+##############
+## DEV ONLY ##
+##############
+
+# Testes
+pytest==8.1.1
+pytest-mock==3.14.0
+
+# Qualidade
+black==24.4.1
+isort==5.13.2
+mypy==1.10.0
+
+# Segurança
+bandit==1.7.7
+safety==2.3.5
