@@ -2,7 +2,7 @@ name: Scrape Virtual Soccer Data
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 */2 * * *'  # A cada 2 horas
   workflow_dispatch:
 
 jobs:
@@ -11,17 +11,26 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
     - name: Install dependencies
-      run: pip install -r requirements.txt  # MUDANÇA AQUI
+      run: pip install -r requirements.txt
         
     - name: Run scraper
-      run: python scraping.py
+      run: python scraping.py || echo "Scraping failed" > error.log
       
     - name: Commit and push
       run: |
@@ -30,3 +39,15 @@ jobs:
         git add live-matches.json
         git commit -m "Update match data" || echo "No changes to commit"
         git push
+
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: "⚠️ Scraping falhou! [Detalhes](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          })
