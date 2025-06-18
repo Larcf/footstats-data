@@ -27,10 +27,17 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install -r requirements.txt
+        pip install pip-audit
+        pip-audit -r requirements.txt
         
     - name: Run scraper
-      run: python scraping.py || echo "Scraping failed" > error.log
+      run: |
+        python scraping.py || {
+          echo "Scraping failed" > error.log
+          exit 1
+        }
       
     - name: Commit and push
       run: |
@@ -39,6 +46,11 @@ jobs:
         git add live-matches.json
         git commit -m "Update match data" || echo "No changes to commit"
         git push
+
+    - name: Archive data
+      run: |
+        mkdir -p archives
+        cp live-matches.json "archives/$(date +'%Y%m%d_%H%M').json"
 
     - name: Notify on failure
       if: failure()
@@ -49,5 +61,5 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: "⚠️ Scraping falhou! [Detalhes](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            body: "⚠️ Scraping falhou! Verifique [aqui](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           })
