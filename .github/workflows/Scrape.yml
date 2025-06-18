@@ -18,8 +18,17 @@ jobs:
         python-version: '3.11'
         
     - name: Install dependencies
-      run: pip install requests beautifulsoup4
-      
+      run: |
+        pip install requests beautifulsoup4
+        pip install cloudscraper
+        
+    # Configurar proxy se necessário (descomente se precisar)
+    # - name: Setup proxy
+    #   run: |
+    #     echo "HTTP_PROXY=http://proxy-server:port" >> $GITHUB_ENV
+    #     echo "HTTPS_PROXY=http://proxy-server:port" >> $GITHUB_ENV
+    #     echo "USE_PROXY=true" >> $GITHUB_ENV
+        
     - name: Run scraper
       run: python scraping.py
       
