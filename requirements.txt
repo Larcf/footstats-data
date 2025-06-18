@@ -1,0 +1,4 @@
+# Dependências para web scraping
+requests==2.31.0          # Requisições HTTP
+beautifulsoup4==4.12.2    # Parsing de HTML
+cloudscraper==1.2.71      # Bypass no Cloudflare
